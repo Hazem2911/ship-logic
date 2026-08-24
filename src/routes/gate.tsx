@@ -39,6 +39,7 @@ const ruleTone = {
 } as const;
 
 function QualityGate() {
+  const [exported, setExported] = useState(false);
   return (
     <AppShell>
       <div className="space-y-6">
