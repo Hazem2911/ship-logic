@@ -26,7 +26,7 @@ const nav = [
   { to: "/reports", label: "Reports", icon: FileText },
 ];
 
-function NavList({ onNavigate }: { onNavigate?: () => void }) {
+function NavList({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   return (
     <nav className="flex flex-col gap-0.5">
@@ -72,7 +72,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-function SidebarBody({ onNavigate }: { onNavigate?: () => void }) {
+function SidebarBody({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   return (
     <div className="flex h-full flex-col">
       <div className="border-b border-sidebar-border px-4 py-3.5">
