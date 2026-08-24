@@ -10,14 +10,34 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExecutionsRouteImport } from './routes/executions'
+import { Route as GateRouteImport } from './routes/gate'
+import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ChangesIndexRouteImport } from './routes/changes.index'
 import { Route as ChangesChangeIdRouteImport } from './routes/changes.$changeId'
+import { Route as FindingsIndexRouteImport } from './routes/findings.index'
+import { Route as FindingsFindingIdRouteImport } from './routes/findings.$findingId'
 import { Route as ScenariosIndexRouteImport } from './routes/scenarios.index'
 import { Route as ScenariosScenarioIdRouteImport } from './routes/scenarios.$scenarioId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExecutionsRoute = ExecutionsRouteImport.update({
+  id: '/executions',
+  path: '/executions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GateRoute = GateRouteImport.update({
+  id: '/gate',
+  path: '/gate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChangesIndexRoute = ChangesIndexRouteImport.update({
@@ -28,6 +48,16 @@ const ChangesIndexRoute = ChangesIndexRouteImport.update({
 const ChangesChangeIdRoute = ChangesChangeIdRouteImport.update({
   id: '/changes/$changeId',
   path: '/changes/$changeId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FindingsIndexRoute = FindingsIndexRouteImport.update({
+  id: '/findings/',
+  path: '/findings/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FindingsFindingIdRoute = FindingsFindingIdRouteImport.update({
+  id: '/findings/$findingId',
+  path: '/findings/$findingId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ScenariosIndexRoute = ScenariosIndexRouteImport.update({
@@ -43,55 +73,90 @@ const ScenariosScenarioIdRoute = ScenariosScenarioIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/executions': typeof ExecutionsRoute
+  '/gate': typeof GateRoute
+  '/reports': typeof ReportsRoute
   '/changes/$changeId': typeof ChangesChangeIdRoute
+  '/findings/$findingId': typeof FindingsFindingIdRoute
   '/scenarios/$scenarioId': typeof ScenariosScenarioIdRoute
   '/changes/': typeof ChangesIndexRoute
+  '/findings/': typeof FindingsIndexRoute
   '/scenarios/': typeof ScenariosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/executions': typeof ExecutionsRoute
+  '/gate': typeof GateRoute
+  '/reports': typeof ReportsRoute
   '/changes/$changeId': typeof ChangesChangeIdRoute
+  '/findings/$findingId': typeof FindingsFindingIdRoute
   '/scenarios/$scenarioId': typeof ScenariosScenarioIdRoute
   '/changes': typeof ChangesIndexRoute
+  '/findings': typeof FindingsIndexRoute
   '/scenarios': typeof ScenariosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/executions': typeof ExecutionsRoute
+  '/gate': typeof GateRoute
+  '/reports': typeof ReportsRoute
   '/changes/$changeId': typeof ChangesChangeIdRoute
+  '/findings/$findingId': typeof FindingsFindingIdRoute
   '/scenarios/$scenarioId': typeof ScenariosScenarioIdRoute
   '/changes/': typeof ChangesIndexRoute
+  '/findings/': typeof FindingsIndexRoute
   '/scenarios/': typeof ScenariosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/executions'
+    | '/gate'
+    | '/reports'
     | '/changes/$changeId'
+    | '/findings/$findingId'
     | '/scenarios/$scenarioId'
     | '/changes/'
+    | '/findings/'
     | '/scenarios/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/executions'
+    | '/gate'
+    | '/reports'
     | '/changes/$changeId'
+    | '/findings/$findingId'
     | '/scenarios/$scenarioId'
     | '/changes'
+    | '/findings'
     | '/scenarios'
   id:
     | '__root__'
     | '/'
+    | '/executions'
+    | '/gate'
+    | '/reports'
     | '/changes/$changeId'
+    | '/findings/$findingId'
     | '/scenarios/$scenarioId'
     | '/changes/'
+    | '/findings/'
     | '/scenarios/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExecutionsRoute: typeof ExecutionsRoute
+  GateRoute: typeof GateRoute
+  ReportsRoute: typeof ReportsRoute
   ChangesChangeIdRoute: typeof ChangesChangeIdRoute
+  FindingsFindingIdRoute: typeof FindingsFindingIdRoute
   ScenariosScenarioIdRoute: typeof ScenariosScenarioIdRoute
   ChangesIndexRoute: typeof ChangesIndexRoute
+  FindingsIndexRoute: typeof FindingsIndexRoute
   ScenariosIndexRoute: typeof ScenariosIndexRoute
 }
 
@@ -102,6 +167,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/executions': {
+      id: '/executions'
+      path: '/executions'
+      fullPath: '/executions'
+      preLoaderRoute: typeof ExecutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gate': {
+      id: '/gate'
+      path: '/gate'
+      fullPath: '/gate'
+      preLoaderRoute: typeof GateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/changes/': {
@@ -116,6 +202,20 @@ declare module '@tanstack/react-router' {
       path: '/changes/$changeId'
       fullPath: '/changes/$changeId'
       preLoaderRoute: typeof ChangesChangeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/findings/': {
+      id: '/findings/'
+      path: '/findings'
+      fullPath: '/findings/'
+      preLoaderRoute: typeof FindingsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/findings/$findingId': {
+      id: '/findings/$findingId'
+      path: '/findings/$findingId'
+      fullPath: '/findings/$findingId'
+      preLoaderRoute: typeof FindingsFindingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/scenarios/': {
@@ -137,9 +237,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExecutionsRoute: ExecutionsRoute,
+  GateRoute: GateRoute,
+  ReportsRoute: ReportsRoute,
   ChangesChangeIdRoute: ChangesChangeIdRoute,
+  FindingsFindingIdRoute: FindingsFindingIdRoute,
   ScenariosScenarioIdRoute: ScenariosScenarioIdRoute,
   ChangesIndexRoute: ChangesIndexRoute,
+  FindingsIndexRoute: FindingsIndexRoute,
   ScenariosIndexRoute: ScenariosIndexRoute,
 }
 export const routeTree = rootRouteImport
