@@ -128,7 +128,10 @@ function ScenarioBoard() {
         </div>
 
         <Panel>
-          <PanelHeader title="All scenarios" meta="sortable list view of the same data" />
+          <PanelHeader
+            title="All scenarios"
+            meta={filter === "all" ? "list view of the same data" : `filtered: ${filter}`}
+          />
           <div className="overflow-x-auto">
             <table className="w-full min-w-[880px] text-left text-[12.5px]">
               <thead>
