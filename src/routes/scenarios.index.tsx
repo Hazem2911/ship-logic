@@ -145,7 +145,14 @@ function ScenarioBoard() {
                 </tr>
               </thead>
               <tbody>
-                {scenarios.map((s) => (
+                {visible.length === 0 ? (
+                  <tr>
+                    <td className="px-4 py-6 text-center text-muted-foreground" colSpan={6}>
+                      No scenarios in this state.
+                    </td>
+                  </tr>
+                ) : null}
+                {visible.map((s) => (
                   <tr key={s.id} className="border-b border-border last:border-0 hover:bg-surface-2">
                     <td className="px-4 py-2.5">
                       <Mono className="text-[11.5px] text-muted-foreground">{s.code}</Mono>
