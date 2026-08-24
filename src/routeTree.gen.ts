@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChangesIndexRouteImport } from './routes/changes.index'
 import { Route as ChangesChangeIdRouteImport } from './routes/changes.$changeId'
+import { Route as ScenariosIndexRouteImport } from './routes/scenarios.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const ChangesChangeIdRoute = ChangesChangeIdRouteImport.update({
   path: '/changes/$changeId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ScenariosIndexRoute = ScenariosIndexRouteImport.update({
+  id: '/scenarios/',
+  path: '/scenarios/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/changes/$changeId': typeof ChangesChangeIdRoute
   '/changes/': typeof ChangesIndexRoute
+  '/scenarios/': typeof ScenariosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/changes/$changeId': typeof ChangesChangeIdRoute
   '/changes': typeof ChangesIndexRoute
+  '/scenarios': typeof ScenariosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/changes/$changeId': typeof ChangesChangeIdRoute
   '/changes/': typeof ChangesIndexRoute
+  '/scenarios/': typeof ScenariosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/changes/$changeId' | '/changes/'
+  fullPaths: '/' | '/changes/$changeId' | '/changes/' | '/scenarios/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/changes/$changeId' | '/changes'
-  id: '__root__' | '/' | '/changes/$changeId' | '/changes/'
+  to: '/' | '/changes/$changeId' | '/changes' | '/scenarios'
+  id: '__root__' | '/' | '/changes/$changeId' | '/changes/' | '/scenarios/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ChangesChangeIdRoute: typeof ChangesChangeIdRoute
   ChangesIndexRoute: typeof ChangesIndexRoute
+  ScenariosIndexRoute: typeof ScenariosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangesChangeIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scenarios/': {
+      id: '/scenarios/'
+      path: '/scenarios'
+      fullPath: '/scenarios/'
+      preLoaderRoute: typeof ScenariosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChangesChangeIdRoute: ChangesChangeIdRoute,
   ChangesIndexRoute: ChangesIndexRoute,
+  ScenariosIndexRoute: ScenariosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
