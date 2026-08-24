@@ -54,10 +54,36 @@ function ScenarioBoard() {
           </div>
         </Panel>
 
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="label-caps mr-1">Filter</span>
+          {[{ key: "all", label: "All" }, ...scenarioColumns].map((f) => {
+            const selected = filter === f.key;
+            return (
+              <button
+                key={f.key}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => setFilter(f.key)}
+                className={
+                  "rounded-[6px] border px-2.5 py-1 text-[12px] font-medium transition-colors " +
+                  (selected
+                    ? "border-primary/40 bg-primary-soft text-accent-foreground"
+                    : "border-border bg-surface text-muted-foreground hover:bg-surface-2 hover:text-foreground")
+                }
+              >
+                {f.label}
+              </button>
+            );
+          })}
+          <span className="ml-auto font-mono text-[11px] text-muted-foreground">
+            {visible.length} shown
+          </span>
+        </div>
+
         <div className="overflow-x-auto pb-1">
           <div className="grid min-w-[1080px] grid-cols-6 gap-3">
             {scenarioColumns.map((col) => {
-              const items = scenarios.filter((s) => s.status === col.key);
+              const items = visible.filter((s) => s.status === col.key);
               return (
                 <section key={col.key} className="min-w-0">
                   <div className="mb-2 flex items-center justify-between px-0.5">
