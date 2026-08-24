@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExecutionsRouteImport } from './routes/executions'
+import { Route as GateRouteImport } from './routes/gate'
 import { Route as ChangesIndexRouteImport } from './routes/changes.index'
 import { Route as ChangesChangeIdRouteImport } from './routes/changes.$changeId'
 import { Route as FindingsIndexRouteImport } from './routes/findings.index'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const ExecutionsRoute = ExecutionsRouteImport.update({
   id: '/executions',
   path: '/executions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GateRoute = GateRouteImport.update({
+  id: '/gate',
+  path: '/gate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChangesIndexRoute = ChangesIndexRouteImport.update({
@@ -62,6 +68,7 @@ const ScenariosScenarioIdRoute = ScenariosScenarioIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/executions': typeof ExecutionsRoute
+  '/gate': typeof GateRoute
   '/changes/$changeId': typeof ChangesChangeIdRoute
   '/findings/$findingId': typeof FindingsFindingIdRoute
   '/scenarios/$scenarioId': typeof ScenariosScenarioIdRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/executions': typeof ExecutionsRoute
+  '/gate': typeof GateRoute
   '/changes/$changeId': typeof ChangesChangeIdRoute
   '/findings/$findingId': typeof FindingsFindingIdRoute
   '/scenarios/$scenarioId': typeof ScenariosScenarioIdRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/executions': typeof ExecutionsRoute
+  '/gate': typeof GateRoute
   '/changes/$changeId': typeof ChangesChangeIdRoute
   '/findings/$findingId': typeof FindingsFindingIdRoute
   '/scenarios/$scenarioId': typeof ScenariosScenarioIdRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/executions'
+    | '/gate'
     | '/changes/$changeId'
     | '/findings/$findingId'
     | '/scenarios/$scenarioId'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/executions'
+    | '/gate'
     | '/changes/$changeId'
     | '/findings/$findingId'
     | '/scenarios/$scenarioId'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/executions'
+    | '/gate'
     | '/changes/$changeId'
     | '/findings/$findingId'
     | '/scenarios/$scenarioId'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ExecutionsRoute: typeof ExecutionsRoute
+  GateRoute: typeof GateRoute
   ChangesChangeIdRoute: typeof ChangesChangeIdRoute
   FindingsFindingIdRoute: typeof FindingsFindingIdRoute
   ScenariosScenarioIdRoute: typeof ScenariosScenarioIdRoute
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/executions'
       fullPath: '/executions'
       preLoaderRoute: typeof ExecutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gate': {
+      id: '/gate'
+      path: '/gate'
+      fullPath: '/gate'
+      preLoaderRoute: typeof GateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/changes/': {
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ExecutionsRoute: ExecutionsRoute,
+  GateRoute: GateRoute,
   ChangesChangeIdRoute: ChangesChangeIdRoute,
   FindingsFindingIdRoute: FindingsFindingIdRoute,
   ScenariosScenarioIdRoute: ScenariosScenarioIdRoute,
