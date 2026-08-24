@@ -33,6 +33,8 @@ export const Route = createFileRoute("/scenarios/")({
 });
 
 function ScenarioBoard() {
+  const [filter, setFilter] = useState<string>("all");
+  const visible = filter === "all" ? scenarios : scenarios.filter((s) => s.status === filter);
   return (
     <AppShell>
       <div className="space-y-6">
