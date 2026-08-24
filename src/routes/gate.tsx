@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, Minus, X } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
@@ -38,6 +39,7 @@ const ruleTone = {
 } as const;
 
 function QualityGate() {
+  const [exported, setExported] = useState(false);
   return (
     <AppShell>
       <div className="space-y-6">
@@ -61,12 +63,31 @@ function QualityGate() {
               View blocking findings
             </Link>
             <Link to="/scenarios" className={buttonStyles.outline}>
-              Review scenarios
+              Review failed scenarios
             </Link>
-            <Link to="/reports" className={buttonStyles.outline}>
+            <button type="button" onClick={() => setExported(true)} className={buttonStyles.outline}>
               Export report
+            </button>
+            <Link
+              to="/changes/$changeId"
+              params={{ changeId: change.id }}
+              className={buttonStyles.outline}
+            >
+              Back to change
             </Link>
           </div>
+          {exported ? (
+            <div
+              role="status"
+              className="mt-3 flex flex-wrap items-center gap-2 rounded-[6px] border border-success/30 bg-success-soft px-3 py-2 text-[12.5px]"
+            >
+              <Check className="size-3.5 text-success" strokeWidth={2.5} />
+              Report prepared for export.
+              <Link to="/reports" className="font-medium text-primary hover:underline">
+                Open report view
+              </Link>
+            </div>
+          ) : null}
         </div>
 
         <Panel>
