@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChangesIndexRouteImport } from './routes/changes.index'
+import { Route as ChangesChangeIdRouteImport } from './routes/changes.$changeId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const ChangesIndexRoute = ChangesIndexRouteImport.update({
   path: '/changes/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangesChangeIdRoute = ChangesChangeIdRouteImport.update({
+  id: '/changes/$changeId',
+  path: '/changes/$changeId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/changes/$changeId': typeof ChangesChangeIdRoute
   '/changes/': typeof ChangesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/changes/$changeId': typeof ChangesChangeIdRoute
   '/changes': typeof ChangesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/changes/$changeId': typeof ChangesChangeIdRoute
   '/changes/': typeof ChangesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/changes/'
+  fullPaths: '/' | '/changes/$changeId' | '/changes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/changes'
-  id: '__root__' | '/' | '/changes/'
+  to: '/' | '/changes/$changeId' | '/changes'
+  id: '__root__' | '/' | '/changes/$changeId' | '/changes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChangesChangeIdRoute: typeof ChangesChangeIdRoute
   ChangesIndexRoute: typeof ChangesIndexRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChangesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/changes/$changeId': {
+      id: '/changes/$changeId'
+      path: '/changes/$changeId'
+      fullPath: '/changes/$changeId'
+      preLoaderRoute: typeof ChangesChangeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChangesChangeIdRoute: ChangesChangeIdRoute,
   ChangesIndexRoute: ChangesIndexRoute,
 }
 export const routeTree = rootRouteImport
